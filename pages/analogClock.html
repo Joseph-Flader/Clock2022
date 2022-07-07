@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Analog Clock</title>
+		<style>
+		body {
+			background-color: linen;
+			color: seagreen;
+			font-family: sans-serif;
+			padding: 0px;
+			margin: 0px;
+		}
+	
+		.header {
+			font-size: 20pt;
+			background-color: black;
+			color: red;
+			padding: 12pt;
+		}
+		
+		.menu-bar {
+			background-color: red;
+		}
+		
+		.menu {
+			display: inline-block;
+			color: black;
+		}
+		
+		.menu-header {
+			padding: 5pt;
+		}
+		
+		.menu-option-list {
+			display: none;
+			background-color: red;
+		}
+		
+		.menu:hover > .menu-option-list {
+			display: inline-block;
+			position: absolute;
+		}
+		
+		.menu-option {
+			padding: 5pt;
+			transition: background-color .5s;
+		}
+		
+		.menu-option:hover {
+			background-color: white;
+			color: black;
+		}
+		
+		table {
+			border-collapse: collapse;
+			margin-top: 12pt;
+		}
+		
+		td {
+			padding-left: 10pt;
+			padding-right: 10pt;
+		}
+		
+		th {
+			background-color: black;
+			color: linen;
+		}
+		
+		table > tbody > tr:nth-child(odd) {
+			background-color: white;
+			color: black;
+		}
+		
+		table > tbody > tr:nth-child(even) {
+			background-color: red;
+			color:white;
+		}
+		
+		.price {
+			text-align: right;
+		}
+		
+		input {
+			background-color: salmon;
+		}
+	</style>
+	</head>
+	<body id="bodyClock">
+		<div class="header">Hello World!</div>
+	<div class="menu-bar">
+		<div class="menu">
+			<div class="menu-header">Menu</div>
+			<div class="menu-option-list">
+				<div class="menu-option"><a href="/index.html">Home</a></div>
+				<div class="menu-option"><a href="pages/clock.html">Clock</a></div>
+				<div class="menu-option"><a href="pages/analogClock.html">Analog Clock</a></div>
+			</div>
+		</div>
+	</div>
+		<div style="text-align: center;">
+			<canvas id="canvasClockFace"width="200" height="200"></canvas>
+		</div>
+		<div>
+			<input id="inputSecondHand" type="color" value="#ff0000">
+			<input id="inputClockFace" type="color" value="#ffffff">
+			<input id="inputBackground" type="color" value="#000000">
+		</div>
+		
+		<div style="display: none;">
+		<img id="imgBackground" src="download(1).png">
+		</div>
+		
+		<script>
+			function toRadians(degreesAngle) {
+			 return degreesAngle * Math.PI / 180.0
+			}
+			
+				var canvas = document.getElementById("canvasClockFace");
+				var context = canvas.getContext("2d");
+				var imgBackground = document.getElementById("imgBackground");
+				var clockPattern = context.createPattern(imgBackground, "no-repeat");
+				
+				context.translate(100,100);
+				context.scale(-1, 1);
+				
+			setInterval(function () {
+				var colorSecondHand =document.getElementById("inputSecondHand").value;
+				var colorClockFace =document.getElementById("inputClockFace").value;
+				var colorBackground =document.getElementById("inputBackground").value;
+			
+				document.getElementById("bodyClock").style.backgroundColor = colorBackground;
+			
+			context.clearRect(-100,-100,200,200)
+			
+				context.beginPath();
+				context.arc(0,0,100,0,2 * Math.PI);
+				
+				context.fillStyle = colorClockFace;
+				context.fill();
+				
+				context.globalCompositeOperation = "source-in";
+				context.scale(-1, 1)
+				context.drawImage(imgBackground, -100, -100)
+				context.scale(-1, 1)
+				context.globalCompositeOperation = "source-over";
+				
+				var time = new Date();
+				var secondAngle = time.getSeconds() * -toRadians(6) - toRadians(90);
+				var minuteAngle = time.getMinutes() * -toRadians(6) - toRadians(90);
+				var hourAngle = time.getHours() * -toRadians(30) - toRadians(90);
+				
+				context.lineCap = "round"
+				
+		
+				//Minute hand
+				context.beginPath();
+				context.moveTo(0,0);
+				context.lineTo(Math.cos(minuteAngle) * 90, Math.sin(minuteAngle) * 90);
+				
+				context.lineWidth = 5;
+				context.strokeStyle = "black";
+				context.stroke();
+				
+				//Hour hand
+				context.beginPath();
+				context.moveTo(0,0);
+				context.lineTo(Math.cos(hourAngle) * 70, Math.sin(hourAngle) * 70);
+				
+				context.lineWidth = 6;
+				context.strokeStyle = "black";
+				context.stroke();
+				
+				// Second hand
+				context.beginPath();
+				context.moveTo(0,0);
+				context.lineTo(Math.cos(secondAngle) * 90, Math.sin(secondAngle) * 90);
+				
+				context.lineWidth = 3;
+				context.strokeStyle = colorSecondHand;
+				context.stroke();
+				
+				context.beginPath();
+				context.arc(0,0,5,0,2 * Math.PI);
+				context.fillStyle = colorSecondHand;
+				context.fill();
+				
+				context.strokeStyle = colorBackground;
+				for (var second = 0; second < 60; second++) {
+					var ticAngle = second * toRadians(6);
+					
+					if (second % 5 == 0) {
+						context.lineWidth = 3;
+					} else {
+						context.lineWidth = 1;
+					}
+					
+					context.beginPath();
+					context.moveTo(Math.cos(ticAngle) * 95, Math.sin(ticAngle) * 95)
+					context.lineTo(Math.cos(ticAngle) * 100, Math.sin(ticAngle) * 100)
+					context.stroke();
+				}
+				
+				
+				// Numbers
+				context.fillStyle = "red";
+				context.textBaseline = "middle"
+				context.textAlign = "center";
+				context.scale(-1, 1);
+				context.font = "bold 18pt trajan"
+				
+				for (var hour =1; hour<= 12; hour++) {
+					var numberAngle = hour * toRadians(30) - toRadians(90)
+					var hourString = '';
+				if(hour == 1) {
+					hourString = 'I';
+				} else if(hour == 2) {
+					hourString = 'II';
+				} else if(hour == 3) {
+					hourString = 'III';
+				} else if(hour == 4) {
+					hourString = 'IV';
+				} else if(hour == 5) {
+					hourString = 'V';
+				} else if(hour == 6) {
+					hourString = 'VI';
+				} else if(hour == 7) {
+					hourString = 'VII';
+				} else if(hour == 8) {
+					hourString = 'VIII';
+				} else if(hour == 9) {
+					hourString = 'IX';
+				} else if(hour == 10) {
+					hourString = 'X';
+				} else if(hour == 11) {
+					hourString = 'XI';
+				} else if(hour == 12) {
+					hourString = 'XII';
+				}
+					
+					context.fillText(hourString, Math.cos(numberAngle) * 80, Math.sin(numberAngle) * 80)
+				}
+				context.scale(-1, 1)
+			}, 1000);
+		
+		</script>
+	</body>
+	
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Clock</title>
+	<style>
+		body {
+			background-color: linen;
+			color: seagreen;
+			font-family: sans-serif;
+			padding: 0px;
+			margin: 0px;
+		}
+	
+		.header {
+			font-size: 20pt;
+			background-color: black;
+			color: red;
+			padding: 12pt;
+		}
+		
+		.menu-bar {
+			background-color: red;
+		}
+		
+		.menu {
+			display: inline-block;
+			color: black;
+		}
+		
+		.menu-header {
+			padding: 5pt;
+		}
+		
+		.menu-option-list {
+			display: none;
+			background-color: red;
+		}
+		
+		.menu:hover > .menu-option-list {
+			display: inline-block;
+			position: absolute;
+		}
+		
+		.menu-option {
+			padding: 5pt;
+			transition: background-color .5s;
+		}
+		
+		.menu-option:hover {
+			background-color: white;
+			color: black;
+		}
+		
+		table {
+			border-collapse: collapse;
+			margin-top: 12pt;
+		}
+		
+		td {
+			padding-left: 10pt;
+			padding-right: 10pt;
+		}
+		
+		th {
+			background-color: black;
+			color: linen;
+		}
+		
+		table > tbody > tr:nth-child(odd) {
+			background-color: white;
+			color: black;
+		}
+		
+		table > tbody > tr:nth-child(even) {
+			background-color: red;
+			color:white;
+		}
+		
+		.price {
+			text-align: right;
+		}
+		
+		input {
+			background-color: salmon;
+		}
+	</style>
+	<style>
+		body {
+			background-image: linear-gradient(to right, red, black);
+		}
+		
+		.clock-container {
+			text-align:center;
+			font-family:"Impact", sans-serif;
+			color: #A9A9A9;
+			text-shadow: 5pt 5pt 5pt black
+		}
+		
+		.clock-time {
+			font-size: 125pt
+		}
+	</style>
+	</head>
+	<body>
+		<div class="header">Hello World!</div>
+	<div class="menu-bar">
+		<div class="menu">
+			<div class="menu-header">Menu</div>
+			<div class="menu-option-list">
+				<div class="menu-option"><a href="/index.html">Home</a></div>
+				<div class="menu-option"><a href="pages/clock.html">Clock</a></div>
+				<div class="menu-option"><a href="pages/analogClock.html">Analog Clock</a></div>
+			</div>
+		</div>
+	</div>
+		<div class="clock-container">
+			<div id="divClockTime" class="clock-time">2:39 pm</div>
+				<div id="divClockDate" class="clock-date">7/6/2022</div>
+		</div>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.4.0/luxon.min.js" integrity="sha512-v1zUTZ9zv9Wb2scL/ANxXM6m7yegm/W5SN8SRHNFADdZIuSFFkrEBjNxO803DdFkjoCcJ88g1WHRVlLN6K/O1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>
+			
+			
+			document.getElementById("divClockTime").innerHTML = luxon.DateTime.now().toFormat("h:mm:ss a");
+			document.getElementById("divClockDate").innerHTML = luxon.DateTime.now().toFormat("M/d/yyyy");
+			
+			setInterval(function () {
+			document.getElementById("divClockTime").innerHTML = luxon.DateTime.now().toFormat("h:mm:ss a");
+			}, 1000);
+		</script>
+	</body>
+</html>

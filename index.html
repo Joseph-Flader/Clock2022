@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home Page</title>
+	<style>
+		body {
+			background-color: linen;
+			color: seagreen;
+			font-family: sans-serif;
+			padding: 0px;
+			margin: 0px;
+		}
+	
+		.header {
+			font-size: 20pt;
+			background-color: black;
+			color: red;
+			padding: 12pt;
+		}
+		
+		.menu-bar {
+			background-color: red;
+		}
+		
+		.menu {
+			display: inline-block;
+			color: black;
+		}
+		
+		.menu-header {
+			padding: 5pt;
+		}
+		
+		.menu-option-list {
+			display: none;
+			background-color: red;
+		}
+		
+		.menu:hover > .menu-option-list {
+			display: inline-block;
+			position: absolute;
+		}
+		
+		.menu-option {
+			padding: 5pt;
+			transition: background-color .5s;
+		}
+		
+		.menu-option:hover {
+			background-color: white;
+			color: black;
+		}
+		
+		table {
+			border-collapse: collapse;
+			margin-top: 12pt;
+		}
+		
+		td {
+			padding-left: 10pt;
+			padding-right: 10pt;
+		}
+		
+		th {
+			background-color: black;
+			color: linen;
+		}
+		
+		table > tbody > tr:nth-child(odd) {
+			background-color: white;
+			color: black;
+		}
+		
+		table > tbody > tr:nth-child(even) {
+			background-color: red;
+			color:white;
+		}
+		
+		.price {
+			text-align: right;
+		}
+		
+		input {
+			background-color: salmon;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">Hello World!</div>
+	<div class="menu-bar">
+		<div class="menu">
+			<div class="menu-header">Menu</div>
+			<div class="menu-option-list">
+				<div class="menu-option"><a href="pages/index.html">Home</a></div>
+				<div class="menu-option"><a href="pages/clock.html">Clock</a></div>
+				<div class="menu-option"><a href="pages/analogClock.html">Analog Clock</a></div>
+			</div>
+		</div>
+	</div>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th>Description</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Golden Banana</td>
+				<td>A yellow fruit</td>
+				<td class="price">$10,000,000.00</td>
+			</tr>
+			<tr>
+				<td>Eagle's Shirt</td>
+				<td>Shirt with the Eagle Team logo</td>
+				<td class="price">$12.00</td>
+			</tr>
+			<tr>
+				<td>Eagle's Sweatshirt</td>
+				<td>Sweatshirt with the Eagle Team logo</td>
+				<td class="price">$55.00</td>
+			</tr>
+			<tr>
+				<td>Eagle's Hat</td>
+				<td>Hat with the Eagle Team logo</td>
+				<td class="price">$35.00</td>
+			</tr>
+			<tr>
+				<td>Eagle's Cup</td>
+				<td>Cup with the Eagle Team logo</td>
+				<td class="price">$40.00</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
